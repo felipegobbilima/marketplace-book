@@ -1,6 +1,6 @@
 package com.marketplacebook.controller.request
 
-class PostCustomerRequest (
+data class PostCustomerRequest (
     var name: String,
 
     var email: String

@@ -1,12 +1,14 @@
 package com.marketplacebook.service
 
+import com.marketplacebook.enums.CustomerStatus
 import com.marketplacebook.model.CustomerModel
 import com.marketplacebook.repository.CustomerRepository
 import org.springframework.stereotype.Service
 
 @Service
 class CustomerService (
-    val customerRepository: CustomerRepository
+    val customerRepository: CustomerRepository,
+    val bookService: BookService
 ) {
 
     fun getAll(name: String?): List<CustomerModel> {
@@ -20,12 +22,11 @@ class CustomerService (
         customerRepository.save(customer)
     }
 
-    fun getCustomer(id: Int): CustomerModel {
+    fun findById(id: Int): CustomerModel {
         return customerRepository.findById(id).get()
     }
 
     fun update(customer: CustomerModel) {
-
         if (!customerRepository.existsById(customer.id!!)){
              throw Exception()
         }
@@ -34,11 +35,11 @@ class CustomerService (
     }
 
     fun delete(id: Int) {
-        if (!customerRepository.existsById(id)){
-            throw Exception()
-        }
+        val customer = findById(id)
+        bookService.deleteByCustomer(customer)
+        customer.status = CustomerStatus.INATIVO
 
-        customerRepository.deleteById(id)
+        customerRepository.save(customer)
     }
 
 }
