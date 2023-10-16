@@ -1,13 +1,14 @@
 package com.marketplacebook.service
 
 import com.marketplacebook.enums.BookStatus
+import com.marketplacebook.enums.Errors
+import com.marketplacebook.exception.NotFoundException
 import com.marketplacebook.model.BookModel
 import com.marketplacebook.model.CustomerModel
 import com.marketplacebook.repository.BookRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
-import java.lang.Exception
 
 @Service
 class BookService(
@@ -27,7 +28,7 @@ class BookService(
     }
 
     fun findById(id: Int): BookModel {
-        return bookRepository.findById(id).orElseThrow{ Exception("Não existe esse recurso") }
+        return bookRepository.findById(id).orElseThrow{ NotFoundException(Errors.MP101.message.format(id), Errors.MP101.code) }
     }
 
     fun delete(id: Int) {
