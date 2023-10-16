@@ -44,4 +44,8 @@ class CustomerService (
         customerRepository.save(customer)
     }
 
+    fun emailAvailible(email: String): Boolean {
+        return !customerRepository.existsByEmail(email)
+    }
+
 }
