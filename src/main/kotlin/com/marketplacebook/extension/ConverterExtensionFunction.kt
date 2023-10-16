@@ -4,6 +4,8 @@ import com.marketplacebook.controller.request.PostBookRequest
 import com.marketplacebook.controller.request.PostCustomerRequest
 import com.marketplacebook.controller.request.PutBookRequest
 import com.marketplacebook.controller.request.PutCustomerRequest
+import com.marketplacebook.controller.response.BookResponse
+import com.marketplacebook.controller.response.CustomerResponse
 import com.marketplacebook.enums.BookStatus
 import com.marketplacebook.enums.CustomerStatus
 import com.marketplacebook.model.BookModel
@@ -33,5 +35,24 @@ fun PutBookRequest.toBookModel(previousValue: BookModel): BookModel {
         status = previousValue.status,
         customer = previousValue.customer
 
+    )
+}
+
+fun CustomerModel.toResponse(): CustomerResponse {
+    return CustomerResponse(
+        id = this.id,
+        name = this.name,
+        email = this.email,
+        status = this.status
+    )
+}
+
+fun BookModel.toResponse(): BookResponse {
+    return BookResponse(
+        id = this.id,
+        name = this.name,
+        price = this.price,
+        customer = this.customer,
+        status = this.status
     )
 }
