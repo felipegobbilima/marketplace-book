@@ -2,10 +2,14 @@ package com.marketplacebook.controller
 
 import com.marketplacebook.controller.request.PostBookRequest
 import com.marketplacebook.controller.request.PutBookRequest
+import com.marketplacebook.controller.response.BookResponse
 import com.marketplacebook.extension.toBookModel
-import com.marketplacebook.model.BookModel
+import com.marketplacebook.extension.toResponse
 import com.marketplacebook.service.BookService
 import com.marketplacebook.service.CustomerService
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
+import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -32,18 +36,18 @@ class BookController(
     }
 
     @GetMapping
-    fun findAll(): List<BookModel> {
-        return bookService.findAll()
+    fun findAll(@PageableDefault(page = 0, size = 10) pageable: Pageable): Page<BookResponse> {
+        return bookService.findAll(pageable).map { it.toResponse() }
     }
 
     @GetMapping("/active")
-    fun findActives(): List<BookModel> {
-        return bookService.findActives()
+    fun findActives(@PageableDefault(page = 0, size = 10) pageable: Pageable): Page<BookResponse> {
+        return bookService.findActives(pageable).map { it.toResponse() }
     }
 
     @GetMapping("/{id}")
-    fun findById(@PathVariable id: Int): BookModel {
-        return bookService.findById(id)
+    fun findById(@PathVariable id: Int): BookResponse {
+        return bookService.findById(id).toResponse()
     }
 
     @DeleteMapping("/{id}")

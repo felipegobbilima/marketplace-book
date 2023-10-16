@@ -4,7 +4,10 @@ import com.marketplacebook.enums.BookStatus
 import com.marketplacebook.model.BookModel
 import com.marketplacebook.model.CustomerModel
 import com.marketplacebook.repository.BookRepository
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
+import java.lang.Exception
 
 @Service
 class BookService(
@@ -15,16 +18,16 @@ class BookService(
         bookRepository.save(book)
     }
 
-    fun findAll(): List<BookModel> {
-        return bookRepository.findAll().toList()
+    fun findAll(pageable: Pageable): Page<BookModel> {
+        return bookRepository.findAll(pageable)
     }
 
-    fun findActives(): List<BookModel> {
-        return bookRepository.findByStatus(BookStatus.ATIVO)
+    fun findActives(pageable: Pageable): Page<BookModel> {
+        return bookRepository.findByStatus(BookStatus.ATIVO, pageable)
     }
 
     fun findById(id: Int): BookModel {
-        return bookRepository.findById(id).orElseThrow()
+        return bookRepository.findById(id).orElseThrow{ Exception("Não existe esse recurso") }
     }
 
     fun delete(id: Int) {
