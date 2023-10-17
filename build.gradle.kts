@@ -20,6 +20,8 @@ repositories {
 }
 
 dependencies {
+	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+	implementation("javax.servlet:javax.servlet-api:4.0.1")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.postgresql:postgresql")
@@ -28,8 +30,12 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.springframework.boot:spring-boot-starter")
 	implementation("org.flywaydb:flyway-core:9.22.3")
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	//swagger
+	implementation("io.springfox:springfox-swagger2:3.0.0")
+	implementation("io.springfox:springfox-swagger-ui:3.0.0")
+	implementation("io.springfox:springfox-boot-starter:3.0.0")
 
+	testImplementation("org.springframework.boot:spring-boot-starter-test")
 
 }
 
